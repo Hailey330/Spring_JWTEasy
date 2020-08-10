@@ -39,9 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ // 필요한 �
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) // 내가 만든 필터 2
 			.authorizeRequests()
 			.antMatchers("/api/v1/user/**")
-				.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')") // user, manager, admin 접근 가능
+				.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')") // user, manager, admin 접근 가능
 			.antMatchers("/api/v1/manager/**")
-				.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')") // 매니저, 관리자만 접근 가능
+				.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')") // 매니저, 관리자만 접근 가능
 			.antMatchers("/api/v1/admin/**")
 				.access("hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll();
