@@ -80,12 +80,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				// ★ ③ 비공개 클레임 : 개인정보, 비밀번호 제외한 Id, Primary Key, Scope 등을 넣음 
 				// https://velopert.com/2389 
 				.withSubject(principalDetails.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+864000000)) // 864000000 = 10일 
+				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME)) // 864000000 = 10일 
 				.withClaim("id", principalDetails.getUser().getId())
 				.withClaim("username", principalDetails.getUser().getUsername())
-				.sign(Algorithm.HMAC512("hongcha".getBytes())); // getBytes() 더 쪼개야 보안이 좋음
+				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
-		response.addHeader("Authorization", "Bearer" + jwtToken);
+		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+//		▼ 만약에 쿠키에 담을 때
+//		response.addHeader("set-cookies", JwtProperties.TOKEN_PREFIX + jwtToken);
+//		Cookie cookie = new Cookie("Authorization", jwtToken);
+//		response.addCookie(cookie);
+		
 	}
 
 }

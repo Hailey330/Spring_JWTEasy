@@ -2,6 +2,8 @@ package com.cos.jwtex01.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.jwtex01.config.auth.SessionUser;
 import com.cos.jwtex01.model.User;
 import com.cos.jwtex01.repository.UserRepository;
 
@@ -48,6 +51,15 @@ public class RestApiController {
 		user.setRoles("ROLE_USER");
 		userRepository.save(user);
 		return "회원가입 완료";
+	}
+	
+	@GetMapping("user")
+	public String user(HttpSession session) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+		System.out.println("principal : " + sessionUser.getId());
+		System.out.println("principal : " + sessionUser.getUsername());
+		System.out.println("principal : " + sessionUser.getRoles());
+		return "<h1>user</h1>";
 	}
 
 }

@@ -28,6 +28,7 @@ public class PrincipalDetailsService implements UserDetailsService{
 //		System.out.println("해당 회원을 찾지 못했습니다.");
 //		return null;
 		
-		return new PrincipalDetails(user);
+		// session.setAttribute("loginUser", user); → @LoginUser 내가 어노테이션을 만들어서 사용하면 편함
+		return new PrincipalDetails(user); // SecurityContext → 세션에 저장됨! @AuthenticationPrincipal 로 접근해야 함  
 	}
 }

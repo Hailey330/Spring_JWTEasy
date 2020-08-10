@@ -20,14 +20,15 @@ public class PrincipalDetails implements UserDetails {
 		return user;
 	}
 
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
-		// model package - User - getRoleList() 
+
+		// model package - User - getRoleList()
 		user.getRoleList().forEach(r -> {
-			authorities.add(()-> {return r;});
+			authorities.add(() -> {
+				return r;
+			});
 		});
 		return authorities;
 	}
